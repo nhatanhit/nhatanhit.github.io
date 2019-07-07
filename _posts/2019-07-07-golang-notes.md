@@ -4,8 +4,7 @@ title: Golang notes
 subtitle: Some interesting basic stuffs  of Golang
 comments: true
 ---
-#Basic 
-## Variables Syntax style
+## Variable Syntax styles
 Variable name first, then variable type
 Ex: 
 
@@ -122,7 +121,7 @@ switch time.Saturday {
 		fmt.Println("In two days.")
 	default:
 		fmt.Println("Too far away.")
-	}
+}
 ```
 Switch with no condition
 ```go
@@ -137,7 +136,7 @@ switch {
 }
 
 ```
-##defer
+## defer
 A defer statement defers the execution of a function until the surrounding function returns.
 The deferred call's arguments are evaluated immediately, but the function call is not executed until the surrounding function returns.
 
