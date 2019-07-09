@@ -3,9 +3,17 @@ layout: post
 title: Golang structures, slice, pointer, map, closure
 subtitle: Golang structures, slice, pointer, map, closure
 comments: true
-image: /img/hello_world.jpeg
+image: /img/gopher.gif
 ---
-## Structure
+# Table of Contents
+1. [Struct](#structure)
+2. [Pointer](#pointer)
+3. [Array](#array)
+4. [Slices](#slices)
+5. [Maps](#maps)
+6. [Function](#function)
+
+# Structure
 Declare Struct
 ```go
 type Vertex struct {
@@ -29,7 +37,7 @@ func main() {
     fmt.Println(v.X)
 }
 ```
-## Pointer
+# Pointer
 The type *T is a pointer point to a T value
 ```go
 var p *int
@@ -46,7 +54,7 @@ p2 := &Vertex{1,2}
 p.X = 1e9
 ```
 
-## Array
+# Array
 Array Declaration
 ```go
 var a[2]string
@@ -55,7 +63,7 @@ var b[3]int
 primes :=[6]int{2, 3, 5, 7, 11, 13}
 fmt.Println(primes)
 ```
-## Slices
+# Slices
 A slice is a reference to an underlying array, it's dynamically-sized, it provides a "view" to an array
 A slice is formed by specifying two indices, a low and high bound, separated by a colon:
 ```text
@@ -248,7 +256,7 @@ func main() {
 	}
 }
 ```
-## Maps
+# Maps
 Similar with other languages
 ```go
 type Vertex struct {
@@ -301,7 +309,7 @@ v, ok := m["Answer"]
 fmt.Println("The value:", v, "Present?", ok)
 ```
 
-## Function 
+# Function 
 Functions are values too. They can be passed around just like other values.
 Function values may be used as function arguments and return values.
 ```go
