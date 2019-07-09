@@ -3,6 +3,7 @@ layout: post
 title: Golang structures, slice, pointer, map, closure
 subtitle: Golang structures, slice, pointer, map, closure
 comments: true
+image: /img/hello_world.jpeg
 ---
 ## Structure
 Declare Struct

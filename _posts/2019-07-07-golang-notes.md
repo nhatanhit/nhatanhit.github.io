@@ -3,6 +3,7 @@ layout: post
 title: Golang notes
 subtitle: Some interesting basic stuffs  of Golang
 comments: true
+tags: [golang, basic]
 ---
 ## Variable Syntax styles
 Variable name first, then variable type
