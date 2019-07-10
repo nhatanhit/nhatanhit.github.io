@@ -240,14 +240,17 @@ func main() {
 
 ## Empty interface
 The empty interface contains no method
-
+A way to init empty interface with concrete type and concrete value is assignment 
 
 ```go
+
+type EI interface{}
 func describe(i interface{}) {
 	fmt.Printf("(%v, %T)\n", i, i)
 }
-
-type EI interface{}
+func describeEI(i EI) {
+	fmt.Printf("(%v, %T)\n", i, i)
+}
 func main() {
 	var i interface{}
 	describe(i)	//(<nil>, <nil>)
@@ -260,11 +263,80 @@ func main() {
 	
 	var ei EI
 	describe(ei)	//(<nil>, <nil>)
+
+	ei = "Hello world"
+	describe(ei)	//(hello world, string)
+
+	var anotherInterface interface{} = "init from assignement"
+	describe(anotherInterface)	// ("init from assignment" , string)
+}
+```
+{: .box-note}
+**Note:** The nil interface contains the functions, but the concrete type and concrete value is nil. The empty interface doesn't contains any functions, but it can receive any concrete type / value through assigment and execute methods of those concrete types from which it is assigned.
+
+## Assertion: A way to verify if we can access the concrete value underlying the interface
+A type assertion provides access to an interface value's underlying concrete value.
+```text
+t := i.(T)
+```
+This statement asserts that the interface value i holds the concrete type T and assigns the underlying T value to the variable t.
+
+If i does not hold a T, the statement will trigger a panic.
+
+A way to verify if i hold a T 
+```text
+t, ok := i.(T)
+if (ok == false) {
+	//panic, i currently not hold concrete type T
 }
 ```
 
+Example
+```go
+func describe(i interface{}) {
+	fmt.Printf("(%v, %T)\n", i, i)
+}
+func main() {
+	var i interface{} = "hello"
+	describe(i) //{hello , string}
+	s := i.(string)
+	fmt.Println(s)	//hello
+
+	s, ok := i.(string)
+	fmt.Println(s, ok)  //hello, true
+
+	f, ok := i.(float64)
+	fmt.Println(f, ok) //0, false
+
+	f = i.(float64) // panic
+	fmt.Println(f)
+}
+```
+## The type switch
+
+A type switch is like a regular switch statement, but the cases in a type switch specify types (not values), and those values are compared against the type of the value held by the given interface value.
 
 
+{: .box-note}
+**Note:** Because i.(type) return the value , not type. And the type is only identified through case of switch so getting the concrete type of one interface must be executed inside the type switch.
 
+Example
+```go
+func do(i interface{}) {
+	
+	switch v:= i.(type)  {	//v is value, 
+	case int:	//switch by type
+		fmt.Printf("Twice %v is %v\n", v, v*2)
+	case string:	
+		fmt.Printf("%q is %v bytes long\n", v, len(v))
+	default:
+		fmt.Printf("I don't know about type %T!\n", v)
+	}
+}
 
-
+func main() {
+	do(21)
+	do("hello")
+	do(true)
+}
+```
