@@ -5,7 +5,17 @@ subtitle: Golang variables, control statements
 comments: true
 tags: [golang, basic]
 ---
-## Variable Syntax styles
+# Table of Contents
+1. [Variable Syntax styles](#variable-syntax-styles)
+2. [Type Conversion](#type-conversion)
+3. [Functions](#functions)
+4. [Constants](#constant)
+5. [For](#for)
+6. [If](#if)
+7. [Switch](#switch)
+8. [Defer](#defer)
+
+# Variable Syntax styles
 Variable name first, then variable type
 Ex: 
 
@@ -25,12 +35,12 @@ var b,c int = 1,2
 d := 4.0
 ```
 
-## Type Conversion
+# Type Conversion
 ```go
 var d = 5
 var e = float64(d)
 ```
-## Functions
+# Functions
 ### Function declaration
 ```go
 func A(a, b int) int {
@@ -54,7 +64,7 @@ func split(sum int) (x, y int) {
 	return
 }
 ```
-## Constant
+# Constant
 Constants are declared like variables, but with the const keyword.
 Constants cannot be declared using the := syntax.
 ```go
@@ -64,8 +74,8 @@ const (
     Small = Big >> 99
 )
 ```
-#Flow control and statements
-## For
+
+# For
 Syntax of For also carries on the declaration of while syntax
 ```go
 //for statement
@@ -80,7 +90,7 @@ for ; sum < 1000; {
 }
 ##
 ```
-## If
+# If
 Like for, if can start with short statement before executing the condition
 ```go
 import (
@@ -96,7 +106,7 @@ func pow(x, n, lim float64) float64 {
 	return lim
 }
 ``` 
-## Switch
+# Switch
 Go only run the select cased, no need to be use break statement as Go auto provide it
 ```go
 switch os:=runtime.GOOS; os {
@@ -137,7 +147,7 @@ switch {
 }
 
 ```
-## defer
+# defer
 A defer statement defers the execution of a function until the surrounding function returns.
 The deferred call's arguments are evaluated immediately, but the function call is not executed until the surrounding function returns.
 
