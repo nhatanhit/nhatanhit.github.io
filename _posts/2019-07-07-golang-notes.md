@@ -1,7 +1,7 @@
 ---
 layout: post
-title: Golang notes
-subtitle: Some interesting basic stuffs  of Golang
+title: Golang variables, control statements
+subtitle: Golang variables, control statements
 comments: true
 tags: [golang, basic]
 ---
