@@ -41,7 +41,10 @@ You can only declare a method with a receiver whose type is defined in the same 
 You can declare methods with pointer receivers . The receiver type has the literal syntax *T for some type T. (Also, T cannot itself be a pointer such as *int.)
 With a value receiver, it's similar with other languages (C++). It pass argument by value, copy value of arguement to the function then mainpulate on it. When function return, the value of of argument still not changed. 
 Thus, when you want to change the object through its methods , you have to pass the object as  a reference 
-When passing as reference/ pointer. By declaring the receiver as pointer,  Golang intepreter is allow both   value / reference argument is passed into the method and can change them correspondingly  
+When passing as reference/ pointer. 
+
+{: .box-note}
+**Note:** By declaring the receiver as pointer,  Golang intepreter  allows both   value / reference argument is passed into the method and modify them  even though the passing type is pass by value
 
 ```go
 
@@ -153,6 +156,114 @@ func main() {
 
 {: .box-note}
 **Note:** if the method is not defined in interface type, when declaring the receiver as pointer,  Golang intepreter is allow both   value / reference argument is passed into the method and can change them correspondingly. But if method is defined in interface type, the statement isn't correct 
+
+## Interfaces values
+Under the hood, interface values can be thought of as a tuple of a value and a concrete type:
+
+```text
+(value, type)
+```
+An interface value holds a value of a specific underlying concrete type.
+Calling a method on an interface value executes the method of the same name on its underlying type.
+
+```go
+type I interface {
+	M()
+}
+
+type T struct {
+	S string
+}
+type F float64
+func (t *T) M() {
+	fmt.Println(t.S)
+}
+func (f F) M() {
+	fmt.Prinln(f)
+}
+func describe(i I) {
+	fmt.Printf("(%v, %T)\n", i, i)
+}
+func main() {
+	var i I
+
+	i = &T{"Hello"}
+	describe(i)
+	i.M()	//output (&{Hello}, *main.T)
+
+	i = F(math.Pi)
+	describe(i)	//output (3.141592653589793, main.F)
+	i.M()
+}
+```
+
+## Interface values with nil underlying values
+If the concrete value inside the interface itself is nil, the method will be called with a nil receiver.
+
+{: .box-note}
+**Note:** An interface value that holds a nil concrete value is itself non-nil.
+
+```go
+type I interface {
+	M()
+}
+
+type T struct {
+	S string
+}
+func (t *T) M() {
+	if (t == nil) {
+		fmt.Println("<nil")
+		return
+	}
+	fmt.Println(t.S)
+}
+func describe(i I) {
+	fmt.Printf("(%v, %T)\n", i, i)
+}
+
+func main() {
+	var i I
+	// nil interface
+	var i2 I	
+	var t T
+	var pt *T
+	i = &t	//get address of null object, but address is not null
+	describe(i)	//output (&{}, *main.T)
+	i.M()
+	i = pt	//null address
+	describe(i)	//(<nil>, *main.T)
+	i.M()
+	describe(i2) //(<nil>, <nil>)
+}
+```
+
+## Empty interface
+The empty interface contains no method
+
+
+```go
+func describe(i interface{}) {
+	fmt.Printf("(%v, %T)\n", i, i)
+}
+
+type EI interface{}
+func main() {
+	var i interface{}
+	describe(i)	//(<nil>, <nil>)
+
+	i = 42
+	describe(i)	//(42, int)
+
+	i = "hello"
+	describe(i)	//(hello, string)
+	
+	var ei EI
+	describe(ei)	//(<nil>, <nil>)
+}
+```
+
+
 
 
 
