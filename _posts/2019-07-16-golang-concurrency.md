@@ -246,8 +246,8 @@ func main() {
 }
 ```
 ## Points need to clarify 
-[When x send to c](https://stackoverflow.com/questions/34931059/go-tutorial-select-statement)
-[Pipeline](https://blog.golang.org/pipelines)
+1. [When x send to c](https://stackoverflow.com/questions/34931059/go-tutorial-select-statement)
+2. [Pipeline](https://blog.golang.org/pipelines)
 # Mutex
 
 
