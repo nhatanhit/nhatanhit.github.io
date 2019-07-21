@@ -209,10 +209,45 @@ length of channel: 0
 
 */
 ```
-
-
 # Select
+The select statement lets a goroutine wait on multiple communication operations.
+A select blocks until one of its cases can run, then it executes that case. It chooses one at random if multiple are ready.
 
+
+
+```go
+func fibonacci(c, quit chan int) {
+	x, y := 0, 1
+	for {
+		//by using select, we let fibonaci wait for incomming element on channels c 		//and quit
+		select {
+		case c <- x:
+			fmt.Println("x comming")
+			x, y = y, x+y
+		case <-quit:
+			fmt.Println("quit")
+			return
+		}
+	}
+}
+
+func main() {
+	//create two channels
+	c := make(chan int)
+	quit := make(chan int)
+	
+	go func() {
+		for i := 0; i < 10; i++ {
+			fmt.Println(<-c)
+		}
+		quit <- 0
+	}()
+	fibonacci(c, quit)
+}
+```
+## Points need to clarify 
+[When x send to c](https://stackoverflow.com/questions/34931059/go-tutorial-select-statement)
+[Pipeline](https://blog.golang.org/pipelines)
 # Mutex
 
 
