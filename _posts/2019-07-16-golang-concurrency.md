@@ -251,10 +251,10 @@ func fibonacci(c, quit chan int) {
 	for {
 		//by using select, we let fibonaci wait for incomming element on channels c 		//and quit
 		select {
-		case c <- x:
+		case c <- x:	//sending x to channel c
 			fmt.Println("x comming")
 			x, y = y, x+y
-		case <-quit:
+		case <-quit: //receive value from channel quit
 			fmt.Println("quit")
 			return
 		}
@@ -309,6 +309,54 @@ func main() {
 ## Points need to clarify 
 1. [When x send to c](https://stackoverflow.com/questions/34931059/go-tutorial-select-statement)
 2. [Pipeline](https://blog.golang.org/pipelines)
+
 # Mutex
+Mutex help to ensure that one go routine can access a shared variable at a time to avoid conflicts
+Go's standard library provides mutual exclusion with sync.Mutex and its two methods: Lock & Unlock
+We can define a block of code to be executed in mutual exclusion by surrounding it with a call to Lock and Unlock
+
+We can also use defer to ensure the mutex will be unlocked
+
+```go
+package main
+
+import (
+	"fmt"
+	"sync"
+	"time"
+)
+
+// SafeCounter is safe to use concurrently.
+type SafeCounter struct {
+	v   map[string]int
+	mux sync.Mutex
+}
+
+// Inc increments the counter for the given key.
+func (c *SafeCounter) Inc(key string) {
+	c.mux.Lock()
+	// Lock so only one goroutine at a time can access the map c.v.
+	c.v[key]++
+	c.mux.Unlock()	//after done updating, release the lock
+}
+
+// Value returns the current value of the counter for the given key.
+func (c *SafeCounter) Value(key string) int {
+	c.mux.Lock()	// Lock so only one goroutine at a time can access the map c.v.
+	
+	defer c.mux.Unlock()	//unlock the mutex when finish readind value from shared variable
+	return c.v[key]
+}
+
+func main() {
+	c := SafeCounter{v: make(map[string]int)}
+	for i := 0; i < 1000; i++ {
+		go c.Inc("somekey")
+	}
+
+	time.Sleep(time.Second)
+	fmt.Println(c.Value("somekey"))
+}
+```
 
 
