@@ -138,9 +138,10 @@ func main() {
 	fmt.Println(<-ch)
 }
 ```
+
 ## Empty Buffered Channel
-{: .box-note}
-**Note:**  Communication on an unbuffered channel does not proceed until both a sending and receiving goroutine are ready for channel operations
+
+In below example, as ch is unbuffered channel, when executing sending data to channel, there is no receiver ready for receiving data from channel ch. So deadlock happens
 
 ```go
 package main
@@ -149,7 +150,12 @@ func main() {
 	ch <- 1	 	//output all goroutines are asleep - deadlock!
 }
 ```
-In above example, as ch is unbuffered channel, when executing sending data to channel, there is no receiver ready for receiving data from channel ch. So deadlock happens
+
+
+{: .box-note}
+**Note:**  Communication on an unbuffered channel does not proceed until both a sending and receiving goroutine are ready for channel operations
+
+
 Fix by separating the sender into another routine
 
 ```go
