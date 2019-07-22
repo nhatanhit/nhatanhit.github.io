@@ -138,6 +138,36 @@ func main() {
 	fmt.Println(<-ch)
 }
 ```
+## Empty Buffered Channel
+{: .box-note}
+**Note:**  Communication on an unbuffered channel does not proceed until both a sending and receiving goroutine are ready for channel operations
+
+```go
+package main
+func main() {
+	ch := make(chan int)
+	ch <- 1	 	//output all goroutines are asleep - deadlock!
+}
+```
+In above example, as ch is unbuffered channel, when executing sending data to channel, there is no receiver ready for receiving data from channel ch. So deadlock happens
+Fix by separating the sender into another routine
+
+```go
+package main
+import "fmt"
+
+func main() {
+	ch := make(chan int)
+	go func() {
+		ch <- 1
+	}()
+	
+	fmt.Printf("%v\n",<-ch)
+	
+}
+```
+
+
 # Range And Close
 A sender can close a channel to indicate that no more values will be sent. Receivers can test whether a channel has been closed by assigning a second parameter to the receive expression: after
 ```go
@@ -245,6 +275,37 @@ func main() {
 	fibonacci(c, quit)
 }
 ```
+## default selection
+The default case in a select is run if no other case is ready.
+Use a default case to try a send or receive without blocking:
+
+```go
+package main
+
+import (
+	"fmt"
+	"time"
+)
+
+func main() {
+	tick := time.Tick(100 * time.Millisecond)
+	boom := time.After(500 * time.Millisecond)
+	
+	for {
+		select {
+		case <-tick:
+			fmt.Println("tick.")
+		case <-boom:
+			fmt.Println("BOOM!")
+			return
+		default:
+			fmt.Println("    .")
+			time.Sleep(50 * time.Millisecond)
+		}
+	}
+}
+```
+
 ## Points need to clarify 
 1. [When x send to c](https://stackoverflow.com/questions/34931059/go-tutorial-select-statement)
 2. [Pipeline](https://blog.golang.org/pipelines)
