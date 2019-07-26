@@ -27,11 +27,16 @@ Instead of expiring when the client closes, permanent cookies expire at a specif
 
 Server cookies can be configured with several options:
 
-HttpOnly cookies: Browser javascript cannot read them.
+HttpOnly cookies: Browser javascript cannot read them. 
 
 Secure cookie: the browser includes the cookie in an HTTP request only if the request is transmitted over a secure channel (typically HTTPS).
 
 SameSite cookies let servers require that a cookie shouldn’t be sent with cross-site requests, which somewhat protects against cross-site request forgery attacks (CSRF). SameSite cookies are still experimental and are not supported by all browsers yet.
+
+
+{: .box-note}
+**Note:**  We can prevent XSS attack from stealing the cookie by setting this cookie as HttpOnly Cookie
+
 ## JSON Web Token
 
 JWTs take the following form: header.payload.signature 
@@ -49,9 +54,16 @@ Attribute of signature cookie
 ## X-Requested-With header
 [What's X-Requested-With-header used for?](https://stackoverflow.com/questions/17478731/whats-the-point-of-the-x-requested-with-header)
 
+{: .box-note}
+**Note:**  Can prevent the CRSF attack by do the validation  x-requested-with: XMLHttpRequest in the header
+
 ## Authentication Flow
 
 ![Authentication](/img/authentication_flow.png)
+
+{: .box-note}
+**Note:**  Although attacker can't access to signature cookie, however , if they know how the signature can be generated from the header.payload, they can generate the signature at their side, and setting it as HTTP ONLY cookie, then send the header.payload along with faked header.signature to perform CRSF attrack: https://markitzeroday.com/x-requested-with/cors/2017/06/29/csrf-mitigation-for-ajax-requests.html. So the step check x-requested-with: XMLHttpRequest to see if the request is cross domain is necessary.
+
 
 ## CRSF and JWT Token
 [JWT and CRSF protection workflow](https://security.stackexchange.com/questions/168403/jwt-and-csrf-protection-workflow)
