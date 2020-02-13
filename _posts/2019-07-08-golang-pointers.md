@@ -12,7 +12,7 @@ image: /img/gopher.gif
 4. [Slices](#slices)
 5. [Maps](#maps)
 6. [Function](#function)
-
+7. [More articles](#more-articles)
 # Structure
 Declare Struct
 ```go
@@ -352,3 +352,6 @@ func main() {
 }
 //output 0 , 1, 3, 6, 10 , 15 , 21, 28 , 36 , 45
 ```
+
+# More articles
+[Golang tips: why pointers to slices are useful and how ignoring them can lead to tricky bugs](https://medium.com/swlh/golang-tips-why-pointers-to-slices-are-useful-and-how-ignoring-them-can-lead-to-tricky-bugs-cac90f72e77b)
