@@ -339,4 +339,7 @@ func main() {
 	do("hello")
 	do(true)
 }
+
 ```
+## Interface References links: 
+[Application of Empty Interfaces](https://blog.golang.org/json-and-go)
