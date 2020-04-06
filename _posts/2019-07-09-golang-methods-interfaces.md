@@ -155,7 +155,30 @@ func main() {
 ```
 
 {: .box-note}
-**Note:** if the method is not defined in interface type, when declaring the receiver as pointer,  Golang intepreter is allow both   value / reference argument is passed into the method and can change them correspondingly. But if method is defined in interface type, the statement isn't correct 
+**Note:** When using the pointer receiver in any method declarations in a interface,then we  can use a value or pointer of the receiver type to make the method call, the compiler will reference or dereference the value if necessary to support the call.
+Unlike when you call methods directly from values and pointers, when you call a method via an interface type value, the rules are different. Methods declared with pointer receivers can only be called by interface type values that contain pointers. Methods declared with value receivers can be called by interface type values that contain both values and pointers.
+
+```go
+// Method declared with a pointer receiver of type defaultMatcher
+func (m *defaultMatcher) Search(feed *Feed, searchTerm string)
+
+// Call the method via an interface type value
+var dm defaultMatcher
+var matcher Matcher = dm     // Assign value to interface type
+matcher.Search(feed, "test") // Call interface method with value
+
+> go build
+//ERROR : cannot use dm (type defaultMatcher) as type Matcher in assignment
+
+// Method declared with a value receiver of type defaultMatcher
+func (m defaultMatcher) Search(feed *Feed, searchTerm string)
+
+// Call the method via an interface type value
+var dm defaultMatcher
+var matcher Matcher = &dm    // Assign pointer to interface type
+matcher.Search(feed, "test") // Call interface method with pointer
+```
+
 
 ## Interfaces values
 Under the hood, interface values can be thought of as a tuple of a value and a concrete type:
