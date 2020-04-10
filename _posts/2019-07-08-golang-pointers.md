@@ -63,6 +63,24 @@ var b[3]int
 primes :=[6]int{2, 3, 5, 7, 11, 13}
 fmt.Println(primes)
 ```
+
+Notation [...]
+```go
+package main
+
+import (
+	_"fmt"
+)
+
+func main() {
+	arr1 := [3][...]float32 { {0:1,2:0}, {1:1,2:0}, {2:1} }
+	arr3 := [...][...]float32 { {0:1,2:0}, {1:1,2:0}, {2:1} }
+	
+}
+//compiled error: use of [...] array outside of array literal
+```
+[Explanation](https://stackoverflow.com/questions/27116462/creating-composite-literal-of-array-of-arrays) 
+
 # Slices
 A slice is a reference to an underlying array, it's dynamically-sized, it provides a "view" to an array
 A slice is formed by specifying two indices, a low and high bound, separated by a colon:
