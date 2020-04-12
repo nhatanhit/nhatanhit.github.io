@@ -1,7 +1,7 @@
 ---
 layout: post
-title: Golang Concurrent Pattern
-subtitle: Golang Concurrent Pattern
+title: GOPATH and GOENV
+subtitle: GOPATH and GOENV
 comments: true
 ---
 # Reference

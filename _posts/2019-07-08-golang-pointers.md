@@ -81,6 +81,9 @@ func main() {
 ```
 [Explanation](https://stackoverflow.com/questions/27116462/creating-composite-literal-of-array-of-arrays) 
 
+{: .box-note}
+**Note:** Array of strings are fundamentally an example of array of pointers, strings being stored at elsewhere in memory. Therefore, same-index cells which containe pointers-not only point to an identical string but also point to same memory area. However, this doesn't hold for the reassignement of array1[2] which happen after the copy of array2 into array1 (array1[2] = array2[2]). array2[2] and array1[2] will therefore contain different values. 
+
 # Slices
 A slice is a reference to an underlying array, it's dynamically-sized, it provides a "view" to an array
 A slice is formed by specifying two indices, a low and high bound, separated by a colon:
