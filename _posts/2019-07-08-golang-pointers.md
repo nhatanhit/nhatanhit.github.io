@@ -284,7 +284,9 @@ fmt.Printf("%v",array)		//output 10 20 30 60 50
 ```
 
 The value of underlying array is auto changed when appending new element into the slice, expand the length of the slice. This is unexpected action.
+
 How to resolve this issue ?
+
 We use the Three slice index
 There’s a third index option we haven’t mentioned yet that you can use when you’re slicing. This third index gives you control over the capacity of the new slice. The purpose is not to increase capacity, but to restrict the capacity. As you’ll see, being able to restrict the capacity of a new slice provides a level of protection to the underlying array and gives you more control over append operations.
 
@@ -317,7 +319,7 @@ func main() {
 }
 ```
 
-![Golang Range Iterates Elements](/img/range_iterate_golang.png)
+![Golang Range Iterates Elements](/img/range_iterator_golang.png)
 
 ```go
 // Create a slice of integers.
