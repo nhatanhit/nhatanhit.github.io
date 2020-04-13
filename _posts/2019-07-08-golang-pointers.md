@@ -90,6 +90,17 @@ A slice is formed by specifying two indices, a low and high bound, separated by 
 ```text
 a[low : high]
 ```
+
+Slices are tiny objects that abstract and manipulate an underlying array. They’re three-field data structures that contain the metadata Go needs to manipulate the underlying arrays
+
+The three fields are a pointer to the underlying array, the length or the number of elements the slice has access to, and the capacity or the number of elements the slice has available for growth.
+
+Illustration of the slice 
+
+![Slice Illustration](/img/slice_illustration.png)
+
+On a 64-bit architecture, a slice requires 24 bytes of memory. The pointer field requires 8 bytes, and the length and capacity fields require 8 bytes respectively. Since the data associated with a slice is contained in the underlying array, there are no problems passing a copy of a slice to any function. Only the slice is being copied, not the underlying array
+
 ```go
 //declare array
 primes := [6]int{2, 3, 5, 7, 11, 13}
@@ -261,6 +272,34 @@ func printSlice(s []int) {
 }
 
 ```
+
+### Three slice index
+Potential issue of function append
+
+```go
+array := [5]int{10, 20, 30, 40, 50}
+newSlice := array[1:3]
+newSlice = append(newSlice,60)
+fmt.Printf("%v",array)		//output 10 20 30 60 50
+```
+
+The value of underlying array is auto changed when appending new element into the slice, expand the length of the slice. This is unexpected action.
+How to resolve this issue ?
+We use the Three slice index
+There’s a third index option we haven’t mentioned yet that you can use when you’re slicing. This third index gives you control over the capacity of the new slice. The purpose is not to increase capacity, but to restrict the capacity. As you’ll see, being able to restrict the capacity of a new slice provides a level of protection to the underlying array and gives you more control over append operations.
+
+```go
+array := [5]int{10, 20, 30, 40, 50}
+newSlice := array[1:3:3] //using three index to restrict the capacitiy of the slice is 2
+newSlice = append(newSlice,60)	
+fmt.Printf("%v",array)		//still output 10 20 30 40 50
+fmt.Printf("%v",newSlice)	//output 20,30, 60
+```
+When we call "append" to newSlice, it will create new underlying array of two elements , contains 20 and 30. Then it will copy value of 60 into the new underlying array 
+With the new slice now having its own underlying array, we’ve avoided potential problems. We can now continue to append fruit to our new slice without worrying if we’re changing fruit to other slices inappropriately. Also, allocating the new underlying array for the slice was easy and clean.
+
+
+
 ### Range
 The range form of the for loop iterates over a slice or map.
 When ranging over a slice, two values are returned for each iteration. The first is the index, and the second is a copy of the element at that index.
@@ -277,6 +316,28 @@ func main() {
 	}
 }
 ```
+
+![Golang Range Iterates Elements](/img/range_iterate_golang.png)
+
+```go
+// Create a slice of integers.
+// Contains a length and capacity of 4 elements.
+slice := []int{10, 20, 30, 40}
+
+// Iterate over each element and display the value and addresses.
+for index, value := range slice {
+   fmt.Printf("Value: %d  Value-Addr: %X  ElemAddr: %X\n",
+       value, &value, &slice[index])
+}
+/*Output 
+Value: 10  Value-Addr: 10500168  ElemAddr: 1052E100
+Value: 20  Value-Addr: 10500168  ElemAddr: 1052E104
+Value: 30  Value-Addr: 10500168  ElemAddr: 1052E108
+Value: 40  Value-Addr: 10500168  ElemAddr: 1052E10C
+*/
+```
+
+
 # Maps
 Similar with other languages
 ```go
