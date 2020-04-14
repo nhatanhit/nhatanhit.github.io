@@ -14,7 +14,7 @@ tags: [golang, basic]
 6. [If](#if)
 7. [Switch](#switch)
 8. [Defer](#defer)
-
+9. [Block And Scope](#block-scope)
 # Variable Syntax styles
 Variable name first, then variable type
 Ex: 
@@ -168,9 +168,29 @@ func main() {
 }
 ```
 
+# Block Scope
 
+```go
+import "fmt"
 
+var i = 1
 
+func main() {
+  fmt.Println("(1) i=",i) // [1]    output 1
+  if true {
+    fmt.Println("(2) i=",i) // [2]  output 1
+    i, err := 3, true
+    fmt.Println("(3) i=",i,err) // [3]  output 3
+    reassign()  //output 2
+    fmt.Println("(4) i=",i,err) // [4]  output 3
+  }
+  fmt.Println("(5) i=",i) // [5]    output 1 as i in outer scope of if
+}
 
+func reassign() {
+    i, err := 2, true
+    fmt.Println("(r) i=",i, err) // [r]
+}
 
-
+```
+Read more at [Scope](https://medium.com/golangspec/scopes-in-go-a6042bb4298c) and [Block](https://medium.com/golangspec/blocks-in-go-2f68768868f6)
