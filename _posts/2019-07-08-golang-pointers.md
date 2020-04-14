@@ -84,6 +84,9 @@ func main() {
 {: .box-note}
 **Note:** Array of strings are fundamentally an example of array of pointers, strings being stored at elsewhere in memory. Therefore, same-index cells which containe pointers-not only point to an identical string but also point to same memory area. However, this doesn't hold for the reassignement of array1[2] which happen after the copy of array2 into array1 (array1[2] = array2[2]). array2[2] and array1[2] will therefore contain different values. 
 
+## Illustration of MultiDimensional Array
+![Multidimensional Array](/img/multi_dimensional_array.png)
+
 # Slices
 A slice is a reference to an underlying array, it's dynamically-sized, it provides a "view" to an array
 A slice is formed by specifying two indices, a low and high bound, separated by a colon:
@@ -95,12 +98,13 @@ Slices are tiny objects that abstract and manipulate an underlying array. Theyâ€
 
 The three fields are a pointer to the underlying array, the length or the number of elements the slice has access to, and the capacity or the number of elements the slice has available for growth.
 
-Illustration of the slice 
+## Illustration of the slice 
 
 ![Slice Illustration](/img/slice_illustration.png)
 
 On a 64-bit architecture, a slice requires 24 bytes of memory. The pointer field requires 8 bytes, and the length and capacity fields require 8 bytes respectively. Since the data associated with a slice is contained in the underlying array, there are no problems passing a copy of a slice to any function. Only the slice is being copied, not the underlying array
 
+## Slice properties
 ```go
 //declare array
 primes := [6]int{2, 3, 5, 7, 11, 13}
@@ -240,6 +244,9 @@ board := [][]string{
     []string{"_", "_", "_"},
 }
 ```
+### Illustration of multi dimensional slice
+![Multi dimensional slice](multi_dimensional_slice.png)
+
 ### Append to a slice
 
 ```text
