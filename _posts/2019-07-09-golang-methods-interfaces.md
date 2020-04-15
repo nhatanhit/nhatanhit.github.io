@@ -164,6 +164,142 @@ The first is so that the method can modify the value that its receiver points to
 
 The second is to avoid copying the value on each method call. This can be more efficient if the receiver is a large struct, for example.
 
+## Type embedding
+Go allows you to take existing types and both extend and change their behavior. This capability is important for code reuse and for changing the behavior of an existing type to suit a new need. This is accomplished through type embedding. It works by taking an existing type and declaring that type within the declaration of a new struct type. The type that is embedded is then called an inner type of the new outer type.
+
+Through inner type promotion, identifiers from the inner type are promoted up to the outer type. These promoted identifiers become part of the outer type as if they were declared explicitly by the type itself. The outer type is then composed of everything the inner type contains, and new fields and methods from inner type can be added. The outer type can also declare the same identifiers as the inner type and override any fields or methods it needs to. This is how an existing type can be both extended and changed.
+
+```go
+// Sample program to show how to embed a type into another type and
+// the relationship between the inner and outer type.
+package main
+
+ import (
+     "fmt"
+ )
+
+ // user defines a user in the program.
+ type user struct {
+     name  string
+     email string
+ }
+
+ // notify implements a method that can be called via
+ // a value of type user.
+ func (u *user) notify() {
+     fmt.Printf("Sending user email to %s<%s>\n",
+     u.name,
+     u.email)
+ }
+
+ // admin represents an admin user with privileges.
+ type admin struct {
+     user  // Embedded Type
+     level string
+ }
+
+ // main is the entry point for the application.
+ func main() {
+     // Create an admin user.
+     ad := admin{
+         user: user{
+             name:  "john smith",
+             email: "john@yahoo.com",
+         },
+         level: "super",
+     }
+
+     // We can access the inner type's method directly.
+     ad.user.notify()
+
+     //IMPORTANT The inner type's method is promoted.
+	 ad.notify()
+	// // Send the admin user a notification.
+	// The embedded inner type's implementation of the
+	// interface is "promoted" to the outer type.
+	sendNotification(&ad)
+
+ }
+func sendNotification(n notifier) {
+	n.notify()
+}
+
+```
+
+Example of overriding method of inner type for outer type
+```go
+// Sample program to show what happens when the outer and inner
+// types implement the same interface.
+ package main
+
+ import (
+     "fmt"
+ )
+
+ // notifier is an interface that defined notification
+ // type behavior.
+ type notifier interface {
+     notify()
+ }
+
+ // user defines a user in the program.
+ type user struct {
+     name  string
+     email string
+ }
+
+ // notify implements a method that can be called via
+ // a value of type user.
+ func (u *user) notify() {
+     fmt.Printf("Sending user email to %s<%s>\n",
+         u.name,
+         u.email)
+ }
+
+ // admin represents an admin user with privileges.
+ type admin struct {
+     user
+     level string
+ }
+
+ // notify implements a method that can be called via
+ // a value of type admin.
+ func (a *admin) notify() {
+     fmt.Printf("Sending admin email to %s<%s>\n",
+         a.name,
+         a.email)
+ }
+
+ // main is the entry point for the application.
+ func main() {
+     // Create an admin user.
+
+     ad := admin{
+         user: user{
+             name:  "john smith",
+             email: "john@yahoo.com",
+         },
+         level: "super",
+     }
+
+     // Send the admin user a notification.
+     // The embedded inner type's implementation of the
+     // interface is NOT "promoted" to the outer type.
+     sendNotification(&ad)
+
+     // We can access the inner type's method directly.
+     ad.user.notify()
+
+     // The inner type's method is NOT promoted.
+     ad.notify()
+ }
+
+ // sendNotification accepts values that implement the notifier
+ // interface and sends notifications.
+ func sendNotification(n notifier) {
+     n.notify()
+ }
+``` 
 # Interfaces
 ## Simple conceptual view of interface after assignements
 
@@ -175,9 +311,6 @@ Interface values are two-word data structures. The first word contains a pointer
 
 When a pointer is assigned to an interface value. In this case, the type information will reflect that a pointer of the assigned type has been stored, and the address being assigned is stored in the second word of the interface value.
 ![A simple view of an interface value after concrete type pointer assignment](interface_pointer_assignment.png)
-
-## Method sets
-
 
 
 ```go
@@ -207,9 +340,11 @@ func main() {
 
 	// In the following line, v is a Vertex (not *Vertex)
 	// and does NOT implement Abser.
-	a = v
+	a = v	//output the error : cannot use v (type Vertex) as type Abser in assignment: Vertex does not implement Abser (Abs method has pointer receiver)
+	fmt.Println(a.Abs()) //doesn't work
+	a = &f //assign address of f to interface
+	a.Abs() // it works even though value of a is adderss of f 
 
-	fmt.Println(a.Abs())
 }
 ```
 
