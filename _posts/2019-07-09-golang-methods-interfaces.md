@@ -12,6 +12,11 @@ image: /img/gopher.gif
 # Methods
 Go does not provide classes.  However you can provide the methods for one  struct, or any user defined type by binding it to a function as receiver
 ## Binding struct/defined type as a receiver
+You can only declare a method with a receiver whose type is defined in the same package as the method. You cannot declare a method with a receiver whose type is defined in another package 
+
+A value receiver of a method can accept both value and pointer to pass into the method. 
+See method Abs in below
+
 ```go
 type Vertex struct {
 	X, Y float64
@@ -30,13 +35,17 @@ func (f float64) Abs() float64 {
 }
 func main() {
 	v := Vertex{3, 4}
-    fmt.Println(v.Abs())    //calling an method through object
+	fmt.Println(v.Abs())    //calling an method through object
+	
+	v2 := &Vertex{3, 4}
+	fmt.Println(v2.Abs())	//calling method through pointer
+
     f := MyFloat(-math.Sqrt2)   //initialize MyFloat
     fmt.Println(f.Abs())
 }
 ```
 
-You can only declare a method with a receiver whose type is defined in the same package as the method. You cannot declare a method with a receiver whose type is defined in another package 
+
 ## Pointer receiver
 You can declare methods with pointer receivers . The receiver type has the literal syntax *T for some type T. (Also, T cannot itself be a pointer such as *int.)
 With a value receiver, it's similar with other languages (C++). It pass argument by value, copy value of arguement to the function then mainpulate on it. When function return, the value of of argument still not changed. 
@@ -60,6 +69,13 @@ func (v *Vertex) Scale(f float64) { //pass by reference to change the object its
 	v.X = v.X * f
 	v.Y = v.Y * f
 }
+func (v Vertex) swapCoordinate() {
+	t := v.X
+	v.X = v.Y
+	v.Y = t
+}
+
+
 func (i *int) Scale(i float64) {    //run time error, "cannot define new methods on non-local type int
     fmt.Println("I modified int pointer")
 }
@@ -68,8 +84,38 @@ func main() {
 	v := Vertex{3, 4}
 	v.Scale(10) //pass by reference to change the object itself
 	fmt.Println(v.Abs()) //even though the calling object is object (not pointer) while Abs() using pointer receiver, this statement still works, output 50
+
+	v.swapCoordinate()
+	//because receiver of  swapCoordinate is value, so the value of v doesn't change,
+	fmt.Println(v.X)	 //output  3
+	fmt.Println(v.Y)	//output 4
 }
 ```
+
+Now we change the receiver in swapCoordinate as a pointer receiver 
+
+```go
+func (v *Vertex) swapCoordinate() {
+	t := v.X
+	v.X = v.Y
+	v.Y = t
+}
+
+func main() {
+	v := Vertex{3, 4}
+	
+
+	v.swapCoordinate()
+	//because receiver of  swapCoordinate is pointer, so the value of v is changed,
+	fmt.Println(v.X)	 //output  4
+	fmt.Println(v.Y)	//output 3
+}
+```
+## When we  should use pointer receiver or value receiver ?
+When the decision is made that a struct type value should not be mutated when something needs to be added or removed from the value, then we should use value receiver.
+When we want the value of the object should be shared with the rest of the program that needs to manipulate on , we should use pointer receiver.
+The decision to use a value or pointer receiver should not be based on whether the method is mutating the receiving value. The decision should be based on the nature of the type. 
+
 ## Pointers and function
 Unlike methods,  The normal function require the passed argument must be correct type (reference or value)
 
@@ -119,8 +165,21 @@ The first is so that the method can modify the value that its receiver points to
 The second is to avoid copying the value on each method call. This can be more efficient if the receiver is a large struct, for example.
 
 # Interfaces
+## Simple conceptual view of interface after assignements
+
 An interface type is defined as a set of method signatures.
 A value of interface type can hold any value that implements those methods.
+
+Interface values are two-word data structures. The first word contains a pointer to an internal table called an iTable, which contains type information about the stored value. The iTable contains the type of value that has been stored and a list of methods associated with the value. The second word is a pointer to the stored value. The combination of type information and pointer binds the relationship between the two values.
+![A simple view of an interface value after concrete type value assignment](interface_assignment_value.png)
+
+When a pointer is assigned to an interface value. In this case, the type information will reflect that a pointer of the assigned type has been stored, and the address being assigned is stored in the second word of the interface value.
+![A simple view of an interface value after concrete type pointer assignment](interface_pointer_assignment.png)
+
+## Method sets
+
+
+
 ```go
 type Abser interface {
 	Abs() float64
@@ -153,6 +212,8 @@ func main() {
 	fmt.Println(a.Abs())
 }
 ```
+
+
 
 {: .box-note}
 **Note:** When using the pointer receiver in any method declarations in a interface,then we  can use a value or pointer of the receiver type to make the method call, the compiler will reference or dereference the value if necessary to support the call.
