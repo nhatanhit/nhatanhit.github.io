@@ -275,12 +275,10 @@ Example of overriding method of inner type for outer type
      // Create an admin user.
 
      ad := admin{
-         user: user{
-             name:  "john smith",
-             email: "john@yahoo.com",
-         },
-         level: "super",
-     }
+        name:  "john smith",
+        email: "john@yahoo.com", 
+		level: "super",
+     }	//throw error: cannot use promoted field user.name in struct literal of type admin , cannot use promoted field user.email in struct literal of type admin
 
      // Send the admin user a notification.
      // The embedded inner type's implementation of the
@@ -300,6 +298,13 @@ Example of overriding method of inner type for outer type
      n.notify()
  }
 ``` 
+
+{: .box-note}
+**Note:**Promotion of inner type fields makes them visible but does not allow them to be used in type literal initializations
+
+See below example
+
+
 # Interfaces
 ## Simple conceptual view of interface after assignements
 
