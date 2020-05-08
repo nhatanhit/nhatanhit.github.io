@@ -7,7 +7,7 @@ comments: true
 # Reference links
 1. [Getting Token Authentication Right in a Stateless Single Page Application](https://medium.com/lightrail/getting-token-authentication-right-in-a-stateless-single-page-application-57d0c6474e3)
 2. [Authentication in SPA (ReactJS and VueJS) the right way](https://medium.com/@jcbaey/authentication-in-spa-reactjs-and-vuejs-the-right-way-e4a9ac5cd9a3)
-
+3 .[Same Site Cookie](https://web.dev/samesite-cookies-explained/)
 # Components can join in authentication process
 ## Bearer Token
 A bearer token is a value that goes into the Authorization header of any HTTP requests. It is not automatically stored anywhere, it has no expiry date and no associated domain. It’s just a value.
