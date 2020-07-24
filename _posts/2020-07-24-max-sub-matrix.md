@@ -16,21 +16,31 @@ Given the 2D Matrix, find the max sum of sub-matrixs
 -1  8   0   -2
 
 Iterator 1 (left = 0)
+
 right = 0, row total matrix = [0,9,-4,-1]   => max sum = 9, max_left = 0, max_right=0,max_top=1,max_bottom = 1
+
 right = 1, row total matrix = [-2,11,-3,7] =>max sum = 15  ,max_left =0, max_right = 1, max_top = 1,max_bottom = 3
+
 right = 2, row total matrix = [5,5,-7,7] => max  sum = 10 < 15 -> skip
+
 right = 3, row total matrix = [5,7,-6,5]    => max sum = 11 < 15 -> skip
 
 Iterator 2 (left = 1) 
+
 right = 1, row total matrix = [-2,2,1,8] => max sum 11 < 15 -> skip
+
 right = 2, row total matrix = [5,-4,-3,8]  => max sum 8 < 15 -> skip
+
 right -=3, row total matrix = [5,-2,-2,6] => max sum 6 < 15 -> skip
 
 Iterator 2 (left = 2) 
+
 right = 2, row total matrix = [7,-6,-4,0] => max sum 7 < 15 -> skip
+
 right = 3, row total matrix = [7,-4,-3,-2] => max sum 7 < 15 -> skip
 
 Iterator 3 (left = 3)
+
 right = 3 , row total matrix [0,2,1,-2] => max sum 2 < 15 -> skip
 
 # Pseudo code
