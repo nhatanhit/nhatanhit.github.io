@@ -3,6 +3,7 @@ layout: post
 title: Finding Max Of Sub Rectangle in The Matrix
 subtitle: Finding Max Of Sub Rectangle in The Matrix
 comments: true
+categories: Alg
 ---
 
 # Problem 
