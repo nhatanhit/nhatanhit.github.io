@@ -4,6 +4,7 @@ title: Golang structures, slice, pointer, map, closure
 subtitle: Golang structures, slice, pointer, map, closure
 comments: true
 image: /img/gopher.gif
+tags: [golang]
 ---
 # Table of Contents
 1. [Struct](#structure)

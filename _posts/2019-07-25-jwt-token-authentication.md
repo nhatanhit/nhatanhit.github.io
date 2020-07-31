@@ -3,6 +3,7 @@ layout: post
 title: JWT Token Authentication
 subtitle: Application for JWT Token Authentication  in stateless application
 comments: true
+tags: [unidentified]
 ---
 # Reference links
 1. [Getting Token Authentication Right in a Stateless Single Page Application](https://medium.com/lightrail/getting-token-authentication-right-in-a-stateless-single-page-application-57d0c6474e3)

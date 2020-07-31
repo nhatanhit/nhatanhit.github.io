@@ -3,6 +3,7 @@ layout: post
 title: Golang Concurrent Pattern
 subtitle: Golang Concurrent Pattern
 comments: true
+tags: [golang]
 ---
 # Reference
 [Concurrency Patterns: Golang](https://medium.com/@thejasbabu/concurrency-patterns-golang-5c5e1bcd0833)

@@ -4,6 +4,7 @@ title: Golang concurrency
 subtitle: Golang concurrency
 comments: true
 image: /img/gopher.gif
+tags: [golang]
 ---
 # Table of Contents
 1. [Goroutines](#goroutines)

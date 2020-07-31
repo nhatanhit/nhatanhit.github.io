@@ -4,6 +4,7 @@ title: Golang methods , interfaces
 subtitle: Golang methods , interfaces
 comments: true
 image: /img/gopher.gif
+tags: [golang]
 ---
 # Table of Contents
 1. [Method](#methods)

@@ -3,7 +3,7 @@ layout: post
 title: Merge Sort
 subtitle: Merge Sort
 comments: true
-categories: Alg
+tags: [alg]
 ---
 # Merge Sort In Array
 ## Pseudo Code
