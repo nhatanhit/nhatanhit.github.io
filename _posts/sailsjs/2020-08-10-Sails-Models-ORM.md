@@ -101,8 +101,11 @@ try {
 # Negotiating Model Errors 
 When you want to display more info of the error you received -> using function  intercept() or tolerate()  of Model
 An error is described by name (The broad classification of the error.) and code(A narrower classification of the error that is sometimes included.)
+
 When an error has name: 'UsageError', this indicates that a Waterline method was used incorrectly, or executed with invalid options (for example, attempting to create a new record that would violate one of your model's high-level validation rules.)
+
 name: 'AdapterError' , indicate a problem in the underlying adapter, and not in the request itself. This can happen when a database goes offline, when there is a permission issue, because of some database-specific edge case, or (more rarely) a bug in the adapter.
+
 err.code === 'E_UNIQUE' => A uniqueness error occurs when a value that should be unique matches that of another record in the database. While this is considered an adapter error, it has its own code to differentiate it from a normal adapter error: code: 'E_UNIQUE'
 
 Demo code
