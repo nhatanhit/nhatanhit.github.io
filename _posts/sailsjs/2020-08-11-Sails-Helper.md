@@ -6,13 +6,9 @@ bigimg: /img/path.jpg
 tags: [sails]
 ---
 
-Below is the list of helpers that Sails provided 
+sails.helpers are provided by core and node modules
 
--------------------------------------------------------
-
- sails.helpers
-
-```text
+```
  Available methods:
    .   
    ├── flow
