@@ -9,8 +9,10 @@ tags: [sails]
 Below is the list of helpers that Sails provided 
 
 -------------------------------------------------------
+
  sails.helpers
 
+```text
  Available methods:
    .   
    ├── flow
@@ -86,3 +88,4 @@ Below is the list of helpers that Sails provided
 
  More info:
    https://sailsjs.com/support
+```
