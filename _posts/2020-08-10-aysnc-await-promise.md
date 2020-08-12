@@ -21,7 +21,15 @@ After Async return a promise , we can get the result by appending to promise cha
 
 ```javascript
 async function fetch(url) {
-    return url;
+    try {
+        //....
+        return url;
+    } catch(ex) {
+        throw Error(ex);
+        //or alternatively 
+        return Promise.reject(new Error(ex));
+    }
+    
 }
 function logFetch(url) {
     return  fetch(url)
@@ -42,7 +50,13 @@ async function fetch(url) {
     return url; 
 }
 async function logFetch(url) {
-    a =  await fetch(url)
+    try {
+        a =  await fetch(url);
+        //or on alternative way
+        a = await fetch(url).catch(e => console.log(e)); 
+    } catch(ex) {
+        console.log(ex);
+    }
     console.log(a + ".vn");
 }
 logFetch("wwww.google.com");    //output: www.google.com
