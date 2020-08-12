@@ -53,8 +53,10 @@ async function logFetch(url) {
     try {
         a =  await fetch(url);
         //or on alternative way
-        a = await fetch(url).catch(e => console.log(e)); 
-    } catch(ex) {
+        a = await fetch(url)
+            .then((x) => console.log(x))
+            .catch(e => console.log(e)); 
+    } catch(ex) {   //this is for await without then/cache
         console.log(ex);
     }
     console.log(a + ".vn");
