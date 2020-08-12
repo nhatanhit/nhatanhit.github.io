@@ -1,0 +1,80 @@
+{
+  "main": {
+    "id": "20d6c4ca508c542d",
+    "type": "split",
+    "children": [
+      {
+        "id": "3be95d5d11975c2a",
+        "type": "leaf",
+        "active": true,
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "_posts/2019-07-08-golang-pointers.md",
+            "mode": "source"
+          }
+        }
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "4e11eed6bebb1ec0",
+    "type": "split",
+    "children": [
+      {
+        "id": "a76daa84f9b51a54",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "be4e1ad09c8f83a9",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {}
+            }
+          },
+          {
+            "id": "ba01eeddff54dc93",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "1f6d5216380bfcfb",
+    "type": "split",
+    "children": [
+      {
+        "id": "cd85ac0c527d6ed0",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "f79c858bd905ea23",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "lastOpenFiles": [
+    "_posts/2019-07-08-golang-pointers.md",
+    "_posts/2020-07-24-max-sub-matrix.md",
+    "_posts/2020-07-23-mergesort.md",
+    "_posts/2019-07-25-jwt-token-authentication.md",
+    "_posts/2015-02-28-test-markdown.md"
+  ]
+}
