@@ -1,10 +1,18 @@
 ---
 layout: post
-title: Sails Lifts
+title: Sails Lifts, Database Migration
 comments: false
 bigimg: /img/path.jpg
 tags: [sails]
 ---
+
+# Migration
+ Running Migration
+
+ ```bash
+ DB_HOST=localhost DB_PORT=5432 MODELS_MIGRATE=alter  sails lift
+ ```
+Migration settings are on these files development.js, model.js
 
 # Overview
 
