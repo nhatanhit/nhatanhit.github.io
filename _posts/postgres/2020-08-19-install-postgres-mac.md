@@ -43,5 +43,9 @@ Run the setup, copy PgAdmin.app into Application Directory
 ```bash
 /usr/local/opt/postgres/bin/createuser -s postgres
 ```
+# switch to postgres user
 
+```bash
+psql -U postgres
+```
 
