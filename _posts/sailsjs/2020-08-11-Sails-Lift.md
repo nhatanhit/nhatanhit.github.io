@@ -7,10 +7,9 @@ tags: [sails]
 ---
 
 # Migration
- Running Migration
-
+ Running Migration and start server with localhost, port database 5432, elastic search host localhost:9200
  ```bash
- DB_HOST=localhost DB_PORT=5432 MODELS_MIGRATE=alter  sails lift
+ DB_HOST=localhost DB_PORT=5432 MODELS_MIGRATE=alter ELASTICSEARCH_HOST=localhost:9200  sails lift
  ```
 Migration settings are on these files development.js, model.js
 
